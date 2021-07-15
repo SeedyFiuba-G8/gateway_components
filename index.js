@@ -1,5 +1,7 @@
-const gatewayUtils = require('./src/utils/gatewayUtils');
+const fetch = require('./src/utils/fetch');
+const urlFactory = require('./src/utils/urlFactory');
 
 module.exports = {
-  gatewayUtils,
+	fetch,
+	urlFactory,
 };
