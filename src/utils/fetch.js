@@ -2,12 +2,16 @@ const _ = require('lodash');
 const axios = require('axios');
 
 module.exports = function $fetch(config, errors) {
-	return function fetch(url, { method = 'GET', body } = {}, context = {}) {
+	return function fetch(
+		url,
+		{ method = 'GET', body, headers = {} } = {},
+		context = {}
+	) {
 		const { timeout } = config.fetch;
 
 		return axios(url, {
 			method,
-			headers: buildHeaders(context),
+			headers: buildHeaders(context, headers),
 			data: body,
 			timeout,
 		})
@@ -23,14 +27,14 @@ module.exports = function $fetch(config, errors) {
 	};
 
 	// Aux
-	function buildHeaders(context) {
-		const headers = {};
+	function buildHeaders(context, headers) {
+		const forwardedHeaders = {};
 		const { forwardHeaders } = config.fetch;
 
 		forwardHeaders.forEach(({ header, contextField }) =>
-			_.set(headers, header, _.get(context, contextField))
+			_.set(forwardedHeaders, header, _.get(context, contextField))
 		);
 
-		return _.omitBy(headers, _.isUndefined);
+		return _.omitBy({ ...forwardedHeaders, ...headers }, _.isUndefined);
 	}
 };
