@@ -1,17 +1,27 @@
 const _ = require('lodash');
 const axios = require('axios');
 
-module.exports = function $fetch(config, errors) {
+module.exports = function $fetch(config, errors, logger) {
 	return function fetch(
 		url,
 		{ method = 'GET', body, headers = {} } = {},
 		context = {}
 	) {
 		const { timeout } = config.fetch;
+		const headers = buildHeaders(context, headers);
+
+		logger.debug({
+			message: 'Fetch request',
+			url,
+			method,
+			headers,
+			body,
+			context,
+		});
 
 		return axios(url, {
 			method,
-			headers: buildHeaders(context, headers),
+			headers,
 			data: body,
 			timeout,
 		})

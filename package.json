@@ -1,6 +1,6 @@
 {
 	"name": "@seedyfiuba/gateway_components",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"description": "Seedy FIUBA Gateway Components",
 	"main": "index.js",
 	"scripts": {},
