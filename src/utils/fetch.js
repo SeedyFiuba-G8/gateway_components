@@ -8,20 +8,20 @@ module.exports = function $fetch(config, errors, logger) {
 		context = {}
 	) {
 		const { timeout } = config.fetch;
-		const headers = buildHeaders(context, headers);
+		const builtHeaders = buildHeaders(context, headers);
 
 		logger.debug({
 			message: 'Fetch request',
 			url,
 			method,
-			headers,
+			headers: builtHeaders,
 			body,
 			context,
 		});
 
 		return axios(url, {
 			method,
-			headers,
+			headers: builtHeaders,
 			data: body,
 			timeout,
 		})
