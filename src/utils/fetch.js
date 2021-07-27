@@ -10,14 +10,15 @@ module.exports = function $fetch(config, errors, logger) {
 		const { timeout } = config.fetch;
 		const builtHeaders = buildHeaders(context, headers);
 
-		logger.debug({
-			message: 'Fetch request',
-			url,
-			method,
-			headers: builtHeaders,
-			body,
-			context,
-		});
+		if (logger)
+			logger.debug({
+				message: 'Fetch request',
+				url,
+				method,
+				headers: builtHeaders,
+				body,
+				context,
+			});
 
 		return axios(url, {
 			method,
